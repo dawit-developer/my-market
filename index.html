@@ -3,31 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>የኔ የገበያ አፕ</title>
+    <title>የዳዊት ገበያ</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 10px; }
-        .search-container { margin-bottom: 20px; }
-        #searchBar { width: 100%; padding: 12px; border-radius: 25px; border: 1px solid #ddd; outline: none; box-sizing: border-box; }
+        .search-container { margin-bottom: 20px; position: sticky; top: 0; background: #f0f2f5; padding: 10px 0; z-index: 100; }
+        #searchBar { width: 100%; padding: 15px; border-radius: 30px; border: 1px solid #ddd; outline: none; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .product-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .product-card { background-color: white; border-radius: 15px; padding: 10px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .product-card img { width: 100%; height: 130px; object-fit: cover; border-radius: 10px; }
-        h3 { font-size: 1rem; margin: 10px 0 5px; color: #333; }
-        .price { color: #28a745; font-weight: bold; margin-bottom: 10px; }
-        button { background-color: #007bff; color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; width: 100%; font-weight: bold; }
+        .product-card img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; }
+        h3 { font-size: 0.9rem; margin: 10px 0 5px; color: #333; height: 40px; overflow: hidden; }
+        .price { color: #28a745; font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; }
+        button { background-color: #007bff; color: white; border: none; padding: 10px; border-radius: 20px; cursor: pointer; width: 100%; font-weight: bold; }
     </style>
 </head>
 <body>
+
     <div class="search-container">
-        <input type="text" id="searchBar" placeholder="ዕቃ ይፈልጉ..." onkeyup="searchProduct()">
+        <input type="text" id="searchBar" placeholder="የሚፈልጉትን ዕቃ እዚህ ይፈልጉ..." onkeyup="searchProduct()">
     </div>
+
     <div class="product-container" id="productGrid"></div>
+
     <script>
+        // እዚህ ውስጥ ነው የምትፈልጋቸውን ዕቃዎች በሙሉ የምትጨምረው
         const products = [
-            { id: 1, name: "ዘመናዊ ስልክ", price: 25000, img: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300" },
-            { id: 2, name: "ላፕቶፕ", price: 45000, img: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=300" },
-            { id: 3, name: "ቆንጆ ጫማ", price: 3500, img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300" },
-            { id: 4, name: "ስማርት ሰዓት", price: 4200, img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300" }
+            // --- ጫማዎች ---
+            { id: 1, name: "Nike Air Force 1", price: 4500, img: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400" },
+            { id: 2, name: "Adidas Superstar", price: 3800, img: "https://images.unsplash.com/photo-1518002171953-a080ee817e1f?w=400" },
+            { id: 3, name: "Jordan Retro 4", price: 6000, img: "https://images.unsplash.com/photo-1552346154-21d32810aba3?w=400" },
+            
+            // --- ሰዓቶች ---
+            { id: 4, name: "Smart Watch Series 8", price: 4200, img: "https://images.unsplash.com/photo-1544117518-33957289df3d?w=400" },
+            { id: 5, name: "Luxury Gold Watch", price: 15000, img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=400" },
+
+            // --- ስልኮች ---
+            { id: 6, name: "iPhone 14 Pro Max", price: 110000, img: "https://images.unsplash.com/photo-1663499482523-1c0c1bae4ce1?w=400" },
+            { id: 7, name: "Samsung Galaxy S23", price: 85000, img: "https://images.unsplash.com/photo-1678911820864-e2c567c655d7?w=400" },
+
+            // --- ላፕቶፖች ---
+            { id: 8, name: "MacBook Air M2", price: 90000, img: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=400" },
+            { id: 9, name: "HP Victus Gaming", price: 65000, img: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=400" }
         ];
+
         function displayProducts(items) {
             const grid = document.getElementById('productGrid');
             grid.innerHTML = ""; 
@@ -41,15 +58,19 @@
                     </div>`;
             });
         }
+
         function searchProduct() {
             let term = document.getElementById('searchBar').value.toLowerCase();
             let filtered = products.filter(p => p.name.toLowerCase().includes(term));
             displayProducts(filtered);
         }
+
         function orderProduct(name, price) {
             let message = `ሰላም፣ ይህን ዕቃ መግዛት እፈልጋለሁ፡-\nምርት፡ ${name}\nዋጋ፡ ${price} ብር`;
+            // ስልክ ቁጥሩን እዚህ ጋር መቀየር ትችላለህ
             window.open(`https://wa.me/251927955743?text=${encodeURIComponent(message)}`, '_blank');
         }
+
         displayProducts(products);
     </script>
 </body>
