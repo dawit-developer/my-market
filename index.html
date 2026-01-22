@@ -1,4 +1,5 @@
-html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +28,6 @@ html lang="en">
             { id: 3, name: "ቆንጆ ጫማ", price: 3500, img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300" },
             { id: 4, name: "ስማርት ሰዓት", price: 4200, img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300" }
         ];
-
         function displayProducts(items) {
             const grid = document.getElementById('productGrid');
             grid.innerHTML = ""; 
@@ -41,19 +41,15 @@ html lang="en">
                     </div>`;
             });
         }
-
         function searchProduct() {
             let term = document.getElementById('searchBar').value.toLowerCase();
             let filtered = products.filter(p => p.name.toLowerCase().includes(term));
             displayProducts(filtered);
         }
-
         function orderProduct(name, price) {
             let message = `ሰላም፣ ይህን ዕቃ መግዛት እፈልጋለሁ፡-\nምርት፡ ${name}\nዋጋ፡ ${price} ብር`;
             window.open(`https://wa.me/251927955743?text=${encodeURIComponent(message)}`, '_blank');
         }
-
-        // ይህ መስመር ነው ምርቶቹን የሚያወጣው
         displayProducts(products);
     </script>
 </body>
