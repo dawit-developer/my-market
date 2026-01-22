@@ -6,56 +6,22 @@
     <title>የኔ የገበያ አፕ</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 10px; }
-        
-        /* የፍለጋ ሳጥን ስታይል */
         .search-container { margin-bottom: 20px; }
         #searchBar { width: 100%; padding: 12px; border-radius: 25px; border: 1px solid #ddd; outline: none; box-sizing: border-box; }
-
-        /* የ Grid ሲስተም - ለስልክ ሁለት ሁለት እንዲሆኑ */
-        .product-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .product-card {
-            background-color: white;
-            border-radius: 15px;
-            padding: 10px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-        }
-
+        .product-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .product-card { background-color: white; border-radius: 15px; padding: 10px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .product-card img { width: 100%; height: 130px; object-fit: cover; border-radius: 10px; }
-        
         h3 { font-size: 1rem; margin: 10px 0 5px; color: #333; }
         .price { color: #28a745; font-weight: bold; margin-bottom: 10px; }
-
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: bold;
-        }
-        button:active { background-color: #0056b3; transform: scale(0.95); }
+        button { background-color: #007bff; color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; width: 100%; font-weight: bold; }
     </style>
 </head>
 <body>
-
     <div class="search-container">
         <input type="text" id="searchBar" placeholder="ዕቃ ይፈልጉ..." onkeyup="searchProduct()">
     </div>
-
-    <div class="product-container" id="productGrid">
-        </div>
-
+    <div class="product-container" id="productGrid"></div>
     <script>
-        // 1. የ OOP መርህ - የምርት መረጃዎች (Array of Objects)
         const products = [
             { id: 1, name: "ዘመናዊ ስልክ", price: 25000, img: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300" },
             { id: 2, name: "ላፕቶፕ", price: 45000, img: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=300" },
@@ -63,11 +29,9 @@
             { id: 4, name: "ስማርት ሰዓት", price: 4200, img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300" }
         ];
 
-        // 2. ምርቶቹን በስክሪን ላይ የሚያወጣ ፈንክሽን
         function displayProducts(items) {
             const grid = document.getElementById('productGrid');
-            grid.innerHTML = ""; // መጀመሪያ ማጽዳት
-            
+            grid.innerHTML = ""; 
             items.forEach(product => {
                 grid.innerHTML += `
                     <div class="product-card">
@@ -75,27 +39,23 @@
                         <h3>${product.name}</h3>
                         <p class="price">${product.price.toLocaleString()} ብር</p>
                         <button onclick="orderProduct('${product.name}', ${product.price})">ግዛ</button>
-                    </div>
-                `;
+                    </div>`;
             });
         }
 
-        // 3. የፍለጋ ፈንክሽን
         function searchProduct() {
             let term = document.getElementById('searchBar').value.toLowerCase();
             let filtered = products.filter(p => p.name.toLowerCase().includes(term));
             displayProducts(filtered);
         }
 
-        // 4.function orderProduct(name, price) {
-            let message = `ሰላም፣ ይህንን ዕቃ መግዛት እፈልጋለሁ፦%0Aምርት፦ ${name}%0Aዋጋ፦ ${price} ብር`;
-            window.open(`https://wa.me/251927955743?text=${message}`, '_blank');
+        function orderProduct(name, price) {
+            let message = `ሰላም፣ ይህን ዕቃ መግዛት እፈልጋለሁ፡-\nምርት፡ ${name}\nዋጋ፡ ${price} ብር`;
+            window.open(`https://wa.me/251927955743?text=${encodeURIComponent(message)}`, '_blank');
         }
 
-        // አፑ ሲከፈት ምርቶቹን አሳይ
-        displayProducts(products የትዕዛዝ ፈንክሽን
-        
+        // ይህ መስመር ነው ምርቶቹን የሚያወጣው
+        displayProducts(products);
     </script>
 </body>
 </html>
-
